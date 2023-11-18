@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 		for(Driver dr : driverList){
 			// get that driver cab
 			Cab cab = dr.getCab();
-			if(cab.isAvailable()){
+			if(cab.getAvailable()){
 				cab.setAvailable(false);
 				dr.setCab(cab);
 				driverRepository2.save(dr);
