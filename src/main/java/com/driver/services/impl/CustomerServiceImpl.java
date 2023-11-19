@@ -94,7 +94,7 @@ public class CustomerServiceImpl implements CustomerService {
 			return tripBooking;
 		}
 		else{
-			throw new NoCabAvailableException("No value present");
+			throw new Exception("No value present");
 		}
 	}
 
