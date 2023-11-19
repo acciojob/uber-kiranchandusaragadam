@@ -82,6 +82,15 @@ public class CustomerServiceImpl implements CustomerService {
 			int bill = distanceInKm * perKmRate;
 			tripBooking.setBill(bill);
 			tripBookingRepository2.save(tripBooking);
+
+			// save trip booking in customer database
+			List<TripBooking> tripBookingList = customer.getTripBookingList();
+			if(tripBookingList == null){
+				tripBookingList = new ArrayList<>();
+			}
+			tripBookingList.add(tripBooking);
+			customerRepository2.save(customer);
+
 			return tripBooking;
 		}
 		else{
