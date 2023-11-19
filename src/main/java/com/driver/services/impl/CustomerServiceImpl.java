@@ -1,7 +1,6 @@
 package com.driver.services.impl;
 
-import com.driver.exceptions.NoValuePresentException;
-import com.driver.exceptions.NoValuePresentException;
+import com.driver.exceptions.NoCabAvailableException;
 import com.driver.model.TripBooking;
 import com.driver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +94,7 @@ public class CustomerServiceImpl implements CustomerService {
 			return tripBooking;
 		}
 		else{
-			throw new NoValuePresentException("No value present");
+			throw new NoCabAvailableException("No cab available!");
 		}
 	}
 
