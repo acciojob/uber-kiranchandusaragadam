@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "tripBooking")
 public class TripBooking {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tripBookingId;
 
     private String fromLocation;
@@ -19,11 +19,9 @@ public class TripBooking {
     private int bill;
 
     @ManyToOne
-    @JoinColumn
     private Driver driver;
 
     @ManyToOne
-    @JoinColumn
     private Customer customer;
 
     public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus tripStatus, int bill, Driver driver, Customer customer) {

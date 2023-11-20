@@ -8,17 +8,17 @@ import java.util.List;
 @Table(name = "driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer driverId;
 
     private String mobile;
 
     private String password;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "driver")
     private List<TripBooking> tripBookingList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    @OneToOne
     private Cab cab;
 
     public Driver(String mobile, String password) {

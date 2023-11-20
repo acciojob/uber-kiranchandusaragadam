@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name="cab")
 public class Cab {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
     private int perKmRate;
@@ -14,7 +14,6 @@ public class Cab {
     private boolean available;
 
     @OneToOne
-    @JoinColumn
     private Driver driver;
 
     public Cab(int perKmRate, boolean available) {

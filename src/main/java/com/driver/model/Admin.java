@@ -6,12 +6,12 @@ import javax.persistence.*;
 @Table(name="admin")
 public class Admin {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer adminId;
 
-    String username;
+    private String username;
 
-    String password;
+    private String password;
 
     public Admin(String username, String password) {
         this.username = username;
