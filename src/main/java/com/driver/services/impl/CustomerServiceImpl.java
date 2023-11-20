@@ -46,6 +46,13 @@ public class CustomerServiceImpl implements CustomerService {
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
 
+		TripBooking newTripBooked = new TripBooking();
+		newTripBooked.setCustomer(customerRepository2.findById(customerId).get());
+		newTripBooked.setFromLocation(fromLocation);
+		newTripBooked.setToLocation(toLocation);
+		newTripBooked.setDistanceInKm(distanceInKm);
+		newTripBooked.setStatus(TripStatus.CONFIRMED);
+
 		List<Driver> driverList = driverRepository2.findAll();
 		Driver driver = null;
 		for(Driver currDriver : driverList){
@@ -55,29 +62,26 @@ public class CustomerServiceImpl implements CustomerService {
 				}
 			}
 		}
-		if(driver==null) {
+
+		if(driver!=null) {
+			newTripBooked.setDriver(driver);
+			int rate = driver.getCab().getPerKmRate();
+			newTripBooked.setBill(distanceInKm*rate);
+
+			driver.getCab().setAvailable(false);
+			driverRepository2.save(driver);
+
+			Customer customer = customerRepository2.findById(customerId).get();
+			customer.getTripBookingList().add(newTripBooked);
+			customerRepository2.save(customer);
+
+
+			tripBookingRepository2.save(newTripBooked);
+			return newTripBooked;
+		}
+		else{
 			throw new Exception("No cab available!");
 		}
-
-		TripBooking newTripBooked = new TripBooking();
-		newTripBooked.setCustomer(customerRepository2.findById(customerId).get());
-		newTripBooked.setFromLocation(fromLocation);
-		newTripBooked.setToLocation(toLocation);
-		newTripBooked.setDistanceInKm(distanceInKm);
-		newTripBooked.setStatus(TripStatus.CONFIRMED);
-		newTripBooked.setDriver(driver);
-		int rate = driver.getCab().getPerKmRate();
-		newTripBooked.setBill(distanceInKm*rate);
-
-		driver.getCab().setAvailable(false);
-		driverRepository2.save(driver);
-
-		Customer customer = customerRepository2.findById(customerId).get();
-		customer.getTripBookingList().add(newTripBooked);
-		customerRepository2.save(customer);
-
-		tripBookingRepository2.save(newTripBooked);
-		return newTripBooked;
 	}
 
 	@Override
