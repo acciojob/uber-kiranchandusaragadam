@@ -1,7 +1,6 @@
 package com.driver.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.driver.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +34,16 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin updatePassword(Integer adminId, String password) {
 		//Update the password of admin with given id
-		Optional<Admin> adminOp = adminRepository1.findById(adminId);
-		if(adminOp.isPresent()){
-			Admin admin = adminOp.get();
-			admin.setPassword(password);
-			adminRepository1.save(admin);
-			return admin;
-		}
-		return null;
+		Admin admin=adminRepository1.findById(adminId).get();
+		admin.setPassword(password);
+		adminRepository1.save(admin);
+		return admin;
 	}
 
 	@Override
 	public void deleteAdmin(int adminId){
 		// Delete admin without using deleteById function
-		adminRepository1.deleteAdmin(adminId);
+		adminRepository1.deleteById(adminId);
 	}
 
 	@Override

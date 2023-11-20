@@ -1,36 +1,39 @@
 package com.driver.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int driverId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer driverId;
+
     private String mobile;
+
     private String password;
-    @OneToMany(mappedBy = "driver")
-    private List<TripBooking> tripBookingList;
-    @OneToOne
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<TripBooking> tripBookingList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Cab cab;
+
+    public Driver(String mobile, String password) {
+        this.mobile = mobile;
+        this.password = password;
+    }
 
     public Driver() {
     }
 
-    public Driver(int driverId, String mobile, String password, List<TripBooking> tripBookingList, Cab cab) {
-        this.driverId = driverId;
-        this.mobile = mobile;
-        this.password = password;
-        this.tripBookingList = tripBookingList;
-        this.cab = cab;
-    }
-
-    public int getDriverId() {
+    public Integer getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(int driverId) {
+    public void setDriverId(Integer driverId) {
         this.driverId = driverId;
     }
 

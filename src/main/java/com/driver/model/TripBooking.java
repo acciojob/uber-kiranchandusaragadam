@@ -3,39 +3,48 @@ package com.driver.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "tripBooking")
 public class TripBooking {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tripBookingId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer tripBookingId;
+
     private String fromLocation;
     private String toLocation;
+
     private int distanceInKm;
-    private TripStatus status;
+
+    private TripStatus tripStatus;
+
     private int bill;
+
     @ManyToOne
+    @JoinColumn
     private Driver driver;
+
     @ManyToOne
+    @JoinColumn
     private Customer customer;
 
-    public TripBooking() {
-    }
-
-    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill, Driver driver, Customer customer) {
+    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus tripStatus, int bill, Driver driver, Customer customer) {
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
-        this.status = status;
+        this.tripStatus = tripStatus;
         this.bill = bill;
         this.driver = driver;
         this.customer = customer;
     }
 
-    public int getTripBookingId() {
-        return tripBookingId;
+    public TripBooking() {
     }
 
-    public void setTripBookingId(int tripBookingId) {
+    public void setTripBookingId(Integer tripBookingId) {
         this.tripBookingId = tripBookingId;
+    }
+
+    public Integer getTripBookingId() {
+        return tripBookingId;
     }
 
     public String getFromLocation() {
@@ -63,11 +72,11 @@ public class TripBooking {
     }
 
     public TripStatus getStatus() {
-        return status;
+        return tripStatus;
     }
 
-    public void setStatus(TripStatus status) {
-        this.status = status;
+    public void setStatus(TripStatus tripStatus) {
+        this.tripStatus = tripStatus;
     }
 
     public int getBill() {
